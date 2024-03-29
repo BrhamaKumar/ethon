@@ -29,7 +29,7 @@ def bash(cmd):
 
 #to get width, height and duration(in sec) of a video
 def videometadata(file):
-    vcap = cv2.VideoCapture(f'{file_n}')  
+    vcap = cv2.VideoCapture(f'{file}')  
     width = round(vcap.get(cv2.CAP_PROP_FRAME_WIDTH ))
     height = round(vcap.get(cv2.CAP_PROP_FRAME_HEIGHT ))
     fps = vcap.get(cv2.CAP_PROP_FPS)
@@ -69,26 +69,26 @@ def duration(pathToInputVideo):
     duration_seconds = float(ffprobe_data["format"]["duration"])
     return int(duration_seconds)
   
-def video_metadata(file):
+def video_metadata(file_n):
     height = 720
     width = 1280
     duration = 0
     try:
-        height, width, duration = findVideoResolution(file)
+        height, width, duration = findVideoResolution(file_n)
         if duration == 0:
-            data = videometadata(file)
+            data = videometadata(file_n)
             duration = data["duration"]
             if duration is None:
                 duration = 0
     except Exception as e:
         try: 
             if 'height' in str(e):
-                data = videometadata(file)
+                data = videometadata(file_n)
                 height = data["height"]
                 width = data["width"]
-                duration = duration(file)
+                duration = duration(file_n)
                 if duration == 0:
-                    data = videometadata(file)
+                    data = videometadata(file_n)
                     duration = data["duration"]
                     if duration is None:
                         duration = 0
